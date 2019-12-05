@@ -1,41 +1,34 @@
-import faunadb from 'faunadb';
+const faunadb = require('faunadb');
 
 /* configure faunaDB Client with our secret */
 const q = faunadb.query
 const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SECRET
+  secret: process.env.FAUNADB_SERVER_SECRET
 })
 
-exports.handler = (event, context, callback) => {
-  console.log("Function `warehouses-read-all` invoked")
-  return client.query(q.Paginate(q.Match(q.Ref("indexes/warehouses"))))
-
-  .then((response) => {
-    const warehouseRefs = response.data
-    console.log("warehouse refs", warehouseRefs)
-    console.log(`${warehouseRefs.length} todos found`)
-
-    // create new query out of warehouse refs. 
-    // https://docs.fauna.com/fauna/current/api/fql/
-
-    const getAllWarehouseDataQuery = warehouseRefs.map((ref) => {
-      return q.Get(ref)
-    })
-
-    // then query the refs
-    return client.query(getAllWarehouseDataQuery).then((ret) => {
-      return callback(null, {
-        statusCode: 200,
-        body: JSON.stringify(ret)
+exports.handler = (event, context) => {
+  console.log('Function `todo-read-all` invoked')
+  return client.query(q.Paginate(q.Match(q.Ref('indexes/all_products'))))
+    .then((response) => {
+      const todoRefs = response.data
+      console.log('Todo refs', todoRefs)
+      console.log(`${todoRefs.length} todos found`)
+      // create new query out of todo refs. http://bit.ly/2LG3MLg
+      const getAllTodoDataQuery = todoRefs.map((ref) => {
+        return q.Get(ref)
       })
-    })  
-  })
-  
-  .catch((error) => {
-    console.log("error", error.message)
-    return callback(null, {
-      statusCode: 400,
-      body: JSON.stringify(error)
+      // then query the refs
+      return client.query(getAllTodoDataQuery).then((ret) => {
+        return {
+          statusCode: 200,
+          body: JSON.stringify(ret)
+        }
+      })
+    }).catch((error) => {
+      console.log('error', error)
+      return {
+        statusCode: 400,
+        body: JSON.stringify(error)
+      }
     })
-  })
 }
