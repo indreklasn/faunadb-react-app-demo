@@ -1,7 +1,4 @@
-import React, { useEffect, useState  } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import beautify from "json-beautify";
+import React, { useEffect, useState } from 'react';
 
 function App() {
 
