@@ -1,5 +1,4 @@
-/* code from functions/todos-create.js */
-import faunadb from 'faunadb' /* Import faunaDB sdk */
+import faunadb from 'faunadb';
 
 /* configure faunaDB Client with our secret */
 const q = faunadb.query
@@ -16,7 +15,9 @@ exports.handler = (event, context, callback) => {
     console.log("warehouse refs", warehouseRefs)
     console.log(`${warehouseRefs.length} todos found`)
 
-    //#  create new query out of warehouse refs. https://docs.fauna.com/fauna/current/api/fql/
+    // create new query out of warehouse refs. 
+    // https://docs.fauna.com/fauna/current/api/fql/
+
     const getAllWarehouseDataQuery = warehouseRefs.map((ref) => {
       return q.Get(ref)
     })

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "faunadb": "^2.10.0",
+    "http-proxy-middleware": "^0.20.0",
     "netlify": "^3.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -12,7 +13,7 @@
   "scripts": {
     "bootstrap-faunadb": "node ./scripts/bootstrap-faunadb.js",
     "start": "netlify dev",
-    "prebuild": "echo 'setup faunaDB' && npm run bootstrap",
+    "prebuild": "echo 'setup faunaDB' && npm run bootstrap-faunadb",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
