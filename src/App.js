@@ -5,9 +5,10 @@ function App() {
   const [data, setData] = useState('')
 
   useEffect(() => {
-    fetch('/.netlify/functions/hello-world')
+    fetch('/.netlify/functions/get-all-products')
     .then((response) => response.json())
     .then(data => setData(data))
+    .catch(err => console.warn(err.message))
   }, [])
   return (
     <div className="App">
