@@ -7,7 +7,7 @@ function App() {
   const [data, setData] = useState('')
 
   useEffect(() => {
-    getAllProducts.then(data =>  setData(data))    
+    getAllProducts.then(data =>  setData(data))
   }, [])
   return (
     <div className="App">
