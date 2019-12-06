@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import getAllProducts from './fauna/get-all-products.js'
+
 
 function App() {
 
   const [data, setData] = useState('')
 
   useEffect(() => {
-    fetch('/.netlify/functions/get-all-products')
-    .then((response) => response.json())
-    .then(data => setData(data))
-    .catch(err => console.warn(err.message))
+    getAllProducts.then(data =>  setData(data))    
   }, [])
   return (
     <div className="App">
